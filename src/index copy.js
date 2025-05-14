@@ -33,9 +33,9 @@ import { v4 as uuid } from "uuid";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import "animate.css";
-// import { configureStore } from "@reduxjs/toolkit";
-// import { applyMiddleware } from "redux";
-import { createStore,bindActionCreators,applyMiddleware } from "./redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { applyMiddleware } from "redux";
+// import { createStore,bindActionCreators } from "./redux";
 import rootReducer from './store/reducer/index';
 import loginUserActionCreater from "./store/action/loginUserAction";
 import usersActionCreater from "./store/action/usersAction";
@@ -44,9 +44,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 //中间件是一个函数 该函数是一个创建函数 接收下一个dispatch   并返回一个新的dispatch函数 以备下一个中间件接收
 
 function logg1(store){
-  console.log(store)
   return function(next){
-    console.log(next.displayName)
     //下面的函数是真正的dispatch函数
     return function(action){
       console.log('日志1前',store.getState(),action);
@@ -58,7 +56,6 @@ function logg1(store){
 
 function logg2(store){
   return function(next){
-    console.log(next.displayName)
     //下面的函数是真正的dispatch函数
     return function(action){
       console.log('日志2前',store.getState(),action);
@@ -68,7 +65,17 @@ function logg2(store){
   }
 }
 
-const store = applyMiddleware(logg1,logg2)(createStore)(rootReducer);
+const store = configureStore({
+  reducer:rootReducer,
+  middleware:(getDefaultMiddleware)=>{
+    console.log(getDefaultMiddleware)
+    return [
+      ...getDefaultMiddleware(),
+      logg1,
+      logg2
+    ]
+  }
+})
 
 store.dispatch(usersActionCreater({
   name:"你好啊"
