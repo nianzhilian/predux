@@ -46,7 +46,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 function logg1(store){
   console.log(store)
   return function(next){
-    console.log(next.displayName)
+    console.log(next)
     //下面的函数是真正的dispatch函数
     return function(action){
       console.log('日志1前',store.getState(),action);
@@ -58,7 +58,7 @@ function logg1(store){
 
 function logg2(store){
   return function(next){
-    console.log(next.displayName)
+    console.log(next)
     //下面的函数是真正的dispatch函数
     return function(action){
       console.log('日志2前',store.getState(),action);
@@ -71,7 +71,7 @@ function logg2(store){
 const store = applyMiddleware(logg1,logg2)(createStore)(rootReducer);
 
 store.dispatch(usersActionCreater({
-  name:"你好啊"
+  name:"李四王八"
 }))
 
 console.log(store.getState())
