@@ -8,11 +8,13 @@ export default function(...middlewares){
     return function(createStore){
         return function(reducer,defaultState){
             const store = createStore(reducer,defaultState);
+            let dispatch = (...args)=>{
+                throw new Error("Dispatching while constructing your middleware is not allowed. ");
+            };
             const simpleStore = {
                 getState:store.getState,
-                dispatch:store.dispatch
+                dispatch:(...arge) => dispatch(...arge)
             }
-            let dispatch;
             //返回的是创建dispatch函数的集合  每一个元素都是一个函数  调用函数会返回dispatch函数
             const dispatchProducers = middlewares.map((mid)=>mid(simpleStore));
             console.log(dispatchProducers)

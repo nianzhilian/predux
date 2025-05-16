@@ -35,10 +35,12 @@ import "./index.css";
 import "animate.css";
 // import { configureStore } from "@reduxjs/toolkit";
 // import { applyMiddleware } from "redux";
-import { createStore,bindActionCreators,applyMiddleware } from "./redux";
+import { createStore,bindActionCreators,applyMiddleware,thunk } from "./redux";
+import logger from "redux-logger";
+// import { thunk } from "redux-thunk";
 import rootReducer from './store/reducer/index';
 import loginUserActionCreater from "./store/action/loginUserAction";
-import usersActionCreater from "./store/action/usersAction";
+import usersActionCreater,{edit} from "./store/action/usersAction";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 //中间件是一个函数 该函数是一个创建函数 接收下一个dispatch   并返回一个新的dispatch函数 以备下一个中间件接收
@@ -67,12 +69,17 @@ function logg2(store){
     }
   }
 }
+console.log(Object.keys(thunk));
+const store = applyMiddleware(thunk,logger)(createStore)(rootReducer);
 
-const store = applyMiddleware(logg1,logg2)(createStore)(rootReducer);
+//利用redux-thunk中间件 有能力dispatch 一个函数(正常dispatch一个action)
 
-store.dispatch(usersActionCreater({
-  name:"李四王八"
-}))
+const aa = store.dispatch(edit())
+aa.then((result) => {
+  console.log(result);
+}).catch((err) => {
+  
+});
 
 console.log(store.getState())
 

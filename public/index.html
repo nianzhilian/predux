@@ -24,6 +24,14 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+      <style>
+        .card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+        }
+    </style>
     <title>React App</title>
     <style>
       #dad{
@@ -38,6 +46,14 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <template id="userCardTemplate">
+        <div class="card">
+            <h2 class="name"></h2>
+            <p class="email"></p>
+            <button class="follow-btn">关注</button>
+        </div>
+    </template>
+    <div id="dad"></div>
     <script>
       //二个阶段  三个状态   未决阶段  完成阶段   三个状态：pending状态 完成状态  失败状态
       var p1 = new Promise((resolve,reject)=>{
@@ -83,6 +99,27 @@
         while:'白色'
       }
       console.log([...arr1,{...obj}])
+
+      // 模拟用户数据
+        const users = [
+            { name: "张三", email: "zhangsan@example.com" },
+            { name: "李四", email: "lisi@example.com" }
+        ];
+    const userCardTemplate = document.getElementById("userCardTemplate");
+    const container = document.getElementById("dad");
+    users.forEach((user) => {
+        const clone = userCardTemplate.content.cloneNode(true);
+        console.log(clone);
+        const name = clone.querySelector(".name");
+        const email = clone.querySelector(".email");
+        const followBtn = clone.querySelector(".follow-btn");
+        name.textContent = user.name;
+        email.textContent = user.email;
+        followBtn.addEventListener("click", () => {
+            console.log(`关注${user.name}`);
+        });
+        container.appendChild(clone);
+    });
     </script>
     <!--
       This HTML file is a template.
