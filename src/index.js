@@ -39,8 +39,12 @@ import { createStore,bindActionCreators,applyMiddleware,thunk } from "./redux";
 import logger from "redux-logger";
 // import { thunk } from "redux-thunk";
 import rootReducer from './store/reducer/index';
+import createSagaMiddleware from "redux-saga";
+import rootSaga from './store/saga/';
 import loginUserActionCreater from "./store/action/loginUserAction";
 import usersActionCreater,{edit} from "./store/action/usersAction";
+import addUser from "./store/action/usersAction";
+import loginUserAction from "./store/action/loginUserAction";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 //中间件是一个函数 该函数是一个创建函数 接收下一个dispatch   并返回一个新的dispatch函数 以备下一个中间件接收
@@ -70,18 +74,29 @@ function logg2(store){
   }
 }
 console.log(Object.keys(thunk));
-const store = applyMiddleware(thunk,logger)(createStore)(rootReducer);
-
+const sagaMid = createSagaMiddleware();
+const store = applyMiddleware(sagaMid,thunk,logger)(createStore)(rootReducer);
+sagaMid.run(rootSaga);
 //利用redux-thunk中间件 有能力dispatch 一个函数(正常dispatch一个action)
 
-const aa = store.dispatch(edit())
+/*const aa = store.dispatch(edit())
 aa.then((result) => {
   console.log(result);
 }).catch((err) => {
   
-});
+});*/
 
 console.log(store.getState())
+
+window.adduer = function(){
+  store.dispatch(addUser({
+    name:"张三"
+  }))
+}
+
+window.loginUser = function(){
+  store.dispatch(loginUserAction());
+}
 
 function App(){
   return (
