@@ -1,18 +1,30 @@
 
-import { take,takeEvery } from "redux-saga/effects";
-import { LOGIN_USER } from "../action/loginUserAction";
-import { ADD_UEER } from "../action/usersAction";
+import { take,takeEvery,delay,put} from "redux-saga/effects";
+import loginUser,{ LOGIN_USER } from "../action/loginUserAction";
+import addUser, { ADD_UEER } from "../action/usersAction";
 
+//delay 阻塞 延时多久继续往下执行
+//put 重新触发一个action
+let i = 1;
 function* addUserCreateGeneartor(){
-    console.log("这是一个普通函数开始");
-    let res = yield 123;
-    console.log("123res:"+res);
+    console.log('这里会执行1---开始');
+    let res = yield delay(5000);
+    if(i<3){
+        res = yield put(addUser({
+            name:"李四"+Math.random()
+        }))
+    }
+    
+    i++;
+    console.log(res);
+    console.log('这里会执行1---结束')
 }
 
 function* loginUserCreateGenerator(){
-    console.log("这是login的开始");
-    let res = yield 456;
-    console.log("456res:"+res);
+    console.log('这里会执行2---开始');
+    yield delay(5000);
+    yield put(loginUser());
+    console.log('这里会执行2---结束');
 }
 
 //takeEvery 会不断的监听action  当监听到action后 运行一个生成器函数

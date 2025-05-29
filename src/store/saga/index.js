@@ -9,6 +9,6 @@ export default function* (){
     /** all里面的所有任务完成则 saga运行结束 */
     //all 会等待所有的生成器全部完成之后才会进行下一步处理
     //会阻塞
-    yield all([studentTask(),countTask()]);
+    yield all([studentTask()]);
     console.log('saga运行结束');
 }
