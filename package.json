@@ -9,6 +9,8 @@
     "cra-template": "1.2.0",
     "dom-helpers": "^5.2.1",
     "dplayer": "^1.27.1",
+    "is-generator": "^1.0.3",
+    "is-promise": "^4.0.0",
     "query-string": "^9.1.1",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
