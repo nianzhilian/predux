@@ -1,18 +1,10 @@
 
-
-function test(){
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if(Math.random()>0.5){
-                resolve("promise完成了")
-            }else{
-                reject("promise报错了");
-            }
-        }, 2000);
-    })
-}
+import { put } from "../../redux-saga/effect";
+import addUser from "../action/usersAction";
 export default function* (){
-    let res = yield test();
-    console.log("接收到的promise结果",res);
-    console.log('结束')
+    let res = yield put(addUser({
+        name:'李四'
+    }))
+    console.log(res)
+    console.log('生成器函数运行结束')
 }

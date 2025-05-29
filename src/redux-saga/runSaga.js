@@ -2,6 +2,7 @@
 import isGenerator from "is-generator";
 import isPromise from "is-promise";
 import { isEffect } from "./sagaEffectHelp";
+import runEffect from "./runEffect";
 /**
  * 
  * @param {*} env 上下文
@@ -48,7 +49,7 @@ export default function(env,generator,...args){
         //3、普通函数的处理
 
         if(isEffect(value)){
-
+            runEffect(env,value,next);
         }else if(isPromise(value)){
             value.then((r)=>next(r)).catch((error)=>next(null,error))
         }else{
