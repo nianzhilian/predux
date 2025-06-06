@@ -4,12 +4,12 @@ export const DECREASE = "decrease";
 //action创建函数
 export function increase(){
     return {
-        type:increase
+        type:INCREASE
     }
 }
 
 export function decrease(){
     return {
-        type:decrease
+        type:DECREASE
     }
 }

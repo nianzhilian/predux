@@ -6,6 +6,9 @@ export function select(func){
 }
 
 export function runEffectSelect(env,effect,next){
-    console.log(env)
-    console.log(effect);
+    let state = env.store.getState();
+    if(effect.payload.fn){
+        state = effect.payload.fn(state);
+    }
+    next(state)
 }

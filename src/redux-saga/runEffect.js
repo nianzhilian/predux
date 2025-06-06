@@ -2,6 +2,9 @@ import { runPutEffect } from "./effect/put";
 import { runCallEffect } from "./effect/call";
 import { effectTypes } from "./sagaEffectHelp";
 import { runEffectSelect } from "./effect/select";
+import { runTakeEffect } from "./effect/take";
+import { runEffecrFork } from "./effect/fork";
+import { runCancelEffect } from "./effect/cancel";
 /**
  * 
  * @param {*} env 运行上下文
@@ -18,6 +21,15 @@ export default function(env,effect,next){
             break;
         case effectTypes.SELECT:
             runEffectSelect(env,effect,next);
+            break;
+        case effectTypes.TAKE:
+            runTakeEffect(env,effect,next);
+            break;
+        case effectTypes.FORK:
+            runEffecrFork(env,effect,next);
+            break;
+        case effectTypes.CANCEL:
+            runCancelEffect(env,effect,next);
             break;
         default:
            throw new Error("类型无效");

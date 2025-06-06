@@ -26,6 +26,15 @@
           'pagebreak anchor codesample | ltr rtl',
         menubar: 'file edit view insert format tools table help'
       });
+
+      function bcd(...args){
+        console.log(args)
+      }
+
+      function abc(...args){
+        bcd(...args.concat(4))
+      }
+      abc(1,2,3)
     </script>
 
   </head>

@@ -3,13 +3,29 @@ import isGenerator from "is-generator";
 import isPromise from "is-promise";
 import { isEffect } from "./sagaEffectHelp";
 import runEffect from "./runEffect";
+import Task from "./task";
 /**
  * 
  * @param {*} env 上下文
  * @param {*} generator 生成器函数
  * @param  {...any} args 剩余参数
  */
+
+function abc(){
+    let i = 0;
+    return {
+        add:function(){
+            i = Math.random()
+        },
+        getValue:function(){
+            return i;
+        }
+    }
+}
+
 export default function(env,generator,...args){
+    var bb = abc();
+    bb.add();
     const iterator = generator();
     /**判断是否是个生成器函数 如果是生成器函数 不断迭代直到结束 */
     if(isGenerator(iterator)){
@@ -40,8 +56,9 @@ export default function(env,generator,...args){
             res = iterator.next(nextValue);
         }
         const {value,done} = res;
-        console.log(value)
+        console.log(value,done,bb.getValue())
         if(done){
+            console.log("迭代结束:"+bb.getValue(),isPas)
             return;
         }
 
@@ -57,5 +74,5 @@ export default function(env,generator,...args){
             next(value)
         }
     }   
-    return {};
+    return new Task(next);
 }

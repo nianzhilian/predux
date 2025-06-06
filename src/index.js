@@ -40,6 +40,7 @@ import logger from "redux-logger";
 // import { thunk } from "redux-thunk";
 import rootReducer from './store/reducer/index';
 import createSagaMiddleware from "../src/redux-saga";
+//import createSagaMiddleware from "redux-saga";
 import rootSaga from './store/saga2';
 import loginUserActionCreater from "./store/action/loginUserAction";
 import usersActionCreater,{edit} from "./store/action/usersAction";
