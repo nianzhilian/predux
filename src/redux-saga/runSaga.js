@@ -40,6 +40,7 @@ export default function(env,generator,...args){
             res = iterator.next(nextValue);
         }
         const {value,done} = res;
+        console.log(value)
         if(done){
             return;
         }

@@ -43,6 +43,7 @@ import createSagaMiddleware from "../src/redux-saga";
 import rootSaga from './store/saga2';
 import loginUserActionCreater from "./store/action/loginUserAction";
 import usersActionCreater,{edit} from "./store/action/usersAction";
+import { increase,decrease } from "./store/action/counter";
 import addUser from "./store/action/usersAction";
 import loginUserAction from "./store/action/loginUserAction";
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -96,6 +97,14 @@ window.adduer = function(){
 
 window.loginUser = function(){
   store.dispatch(loginUserAction());
+}
+
+window.increase = function(){
+  store.dispatch(increase());
+}
+
+window.decrease = function(){
+  store.dispatch(decrease());
 }
 
 function App(){

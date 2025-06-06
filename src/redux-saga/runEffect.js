@@ -1,5 +1,7 @@
 import { runPutEffect } from "./effect/put";
+import { runCallEffect } from "./effect/call";
 import { effectTypes } from "./sagaEffectHelp";
+import { runEffectSelect } from "./effect/select";
 /**
  * 
  * @param {*} env 运行上下文
@@ -11,7 +13,12 @@ export default function(env,effect,next){
         case effectTypes.PUT:
             runPutEffect(env,effect,next);
             break;
-    
+        case effectTypes.CALL:
+            runCallEffect(env,effect,next);
+            break;
+        case effectTypes.SELECT:
+            runEffectSelect(env,effect,next);
+            break;
         default:
            throw new Error("类型无效");
     }
