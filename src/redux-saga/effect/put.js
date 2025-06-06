@@ -7,6 +7,7 @@ export function put(action){
         action
     })
 }
+//相当于dispatch一个action
 export function runPutEffect(env,effect,next){
     const {store} = env;
     const {payload} = effect;

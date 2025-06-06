@@ -7,6 +7,7 @@ export function cancel(task){
 }
 
 export function runCancelEffect(env,effect,next){
+    //取消任务
     effect.payload.task.cancel();
     next()
 }
