@@ -7,7 +7,8 @@ export const effectTypes = {
     SELECT:'SELECT',
     TAKE:'TAKE',
     FORK:'FORK',
-    CANCEL:'CANCEL'
+    CANCEL:'CANCEL',
+    ALL:'ALL'
 }
 
 /**

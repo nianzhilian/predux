@@ -11,7 +11,7 @@ export function call(fn,...args){
     let context = null,func=fn;
     if(Array.isArray(fn)){
         context = fn[0];
-        func = fn;
+        func = fn[1];
     }
     return createEffect(effectTypes.CALL,{
         context,

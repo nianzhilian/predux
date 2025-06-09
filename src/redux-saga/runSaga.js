@@ -30,11 +30,17 @@ export default function(env,generator,...args){
     /**判断是否是个生成器函数 如果是生成器函数 不断迭代直到结束 */
     if(isGenerator(iterator)){
        //一直迭代 直到结束
-       next();
+       return enhanceFn(env,iterator,bb);
     }else{
         console.log("是个普通函数")
     }
-    
+}
+
+export function enhanceFn(env,iterator,bb){
+    var callObj = {
+        cb:null
+    }
+    next();
     /**
      * 
      * @param {*} nextValue 传递的上一次迭代的值
@@ -51,17 +57,18 @@ export default function(env,generator,...args){
         }else if(isPas){
             //如果结束 则结束整个迭代
             res = iterator.return();
+            callObj.cb && callObj.cb()
         }else{
             //一直迭代
             res = iterator.next(nextValue);
         }
         const {value,done} = res;
-        console.log(value,done,bb.getValue())
+        console.log(value,"done:"+done,(bb&&bb.getValue()))
         if(done){
-            console.log("迭代结束:"+bb.getValue(),isPas)
+            callObj.cb && callObj.cb();
+            console.log("迭代结束:","isPas:"+isPas,(bb&&bb.getValue()))
             return;
         }
-
         //1、是否是指令对象 的处理
         //2、是否是promise 的处理
         //3、普通函数的处理
@@ -74,5 +81,5 @@ export default function(env,generator,...args){
             next(value)
         }
     }   
-    return new Task(next);
+    return new Task(next,callObj);
 }

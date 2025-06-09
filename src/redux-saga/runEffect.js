@@ -5,6 +5,7 @@ import { runEffectSelect } from "./effect/select";
 import { runTakeEffect } from "./effect/take";
 import { runEffecrFork } from "./effect/fork";
 import { runCancelEffect } from "./effect/cancel";
+import { runAllEffect } from "./effect/all";
 /**
  * 
  * @param {*} env 运行上下文
@@ -30,6 +31,9 @@ export default function(env,effect,next){
             break;
         case effectTypes.CANCEL:
             runCancelEffect(env,effect,next);
+            break;
+        case effectTypes.ALL:
+            runAllEffect(env,effect,next);
             break;
         default:
            throw new Error("类型无效");
