@@ -33,60 +33,15 @@ import { v4 as uuid } from "uuid";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import "animate.css";
-// import { configureStore } from "@reduxjs/toolkit";
-// import { applyMiddleware } from "redux";
-import { createStore,bindActionCreators,applyMiddleware,thunk } from "./redux";
-import logger from "redux-logger";
-// import { thunk } from "redux-thunk";
-import rootReducer from './store/reducer/index';
-import createSagaMiddleware from "../src/redux-saga";
-//import createSagaMiddleware from "redux-saga";
-import rootSaga from './store/saga2';
-import loginUserActionCreater from "./store/action/loginUserAction";
-import usersActionCreater,{edit} from "./store/action/usersAction";
-import { increase,decrease } from "./store/action/counter";
 import addUser from "./store/action/usersAction";
 import loginUserAction from "./store/action/loginUserAction";
+import { increase,decrease,asyncIncrease,asyncDecrease } from "./store/action/counter";
+import store from "./store";
+import { Provider } from "react-redux";
+import CountContainer from "./store/test";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-//中间件是一个函数 该函数是一个创建函数 接收下一个dispatch   并返回一个新的dispatch函数 以备下一个中间件接收
 
-function logg1(store){
-  console.log(store)
-  return function(next){
-    console.log(next)
-    //下面的函数是真正的dispatch函数
-    return function(action){
-      console.log('日志1前',store.getState(),action);
-      next(action);
-      console.log('日志1后',store.getState(),action);
-    }
-  }
-}
-
-function logg2(store){
-  return function(next){
-    console.log(next)
-    //下面的函数是真正的dispatch函数
-    return function(action){
-      console.log('日志2前',store.getState(),action);
-      next(action);
-      console.log('日志2后',store.getState(),action);
-    }
-  }
-}
-console.log(Object.keys(thunk));
-const sagaMid = createSagaMiddleware();
-const store = applyMiddleware(sagaMid,thunk,logger)(createStore)(rootReducer);
-sagaMid.run(rootSaga);
-//利用redux-thunk中间件 有能力dispatch 一个函数(正常dispatch一个action)
-
-/*const aa = store.dispatch(edit())
-aa.then((result) => {
-  console.log(result);
-}).catch((err) => {
-  
-});*/
 
 console.log(store.getState())
 
@@ -108,11 +63,19 @@ window.decrease = function(){
   store.dispatch(decrease());
 }
 
+window.asyncIncrease = function(){
+  store.dispatch(asyncIncrease())
+}
+
+window.asyncDecrease = function(){
+  store.dispatch(asyncDecrease());
+}
+
 function App(){
   return (
-    <div>
-      张三
-    </div>
+    <Provider store={store}>
+      <CountContainer />
+    </Provider>
   )
 }
 
