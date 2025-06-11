@@ -39,9 +39,11 @@ import { increase,decrease,asyncIncrease,asyncDecrease } from "./store/action/co
 import store from "./store";
 import { Provider } from "react-redux";
 import CountContainer from "./store/test";
+import { getMovies } from "./service/movies";
+import { fetchList } from "./store/action/movies/searchResultAction";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-
+//getMovies()
 
 console.log(store.getState())
 
@@ -71,12 +73,19 @@ window.asyncDecrease = function(){
   store.dispatch(asyncDecrease());
 }
 
-function App(){
+window.fetchMovies = function(){
+  store.dispatch(fetchList());
+}
+
+/*function App(){
   return (
     <Provider store={store}>
       <CountContainer />
     </Provider>
   )
+}*/
+function App(){
+  return null;
 }
 
 root.render(<App />)

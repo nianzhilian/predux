@@ -1,8 +1,7 @@
 import { combineReducers } from "../../redux";
 // import { combineReducers } from "redux";
-import loginReducer from "./loginReducer"; 
-import usersReducer from "./usersReducer";
 import counter from "./counter";
+import movies from "./movies";
 
 // export default (state={},action)=>{
 //     console.log('根reducer',state,action)
@@ -16,7 +15,6 @@ import counter from "./counter";
 console.log(combineReducers)
 
 export default combineReducers({
-    loginUser:loginReducer,
-    users:usersReducer,
-    counter
+    counter,
+    movies
 });

@@ -23,9 +23,12 @@ export function call(fn,...args){
 export function runCallEffect(env,effect,next){
     const {context,func,args} = effect.payload;
     let res = func.call(context,...args);
+    console.log(res)
     /** res 运行func返回的  有可能是promise 等待promise完成*/
     if(isPromise(res)){
-        res.then((r)=>next(r)).catch(error=>next(null,error));
+        res.then((r)=>next(r)).catch(error=>{
+            return next(null,error)
+        });
     }else{
         next(res);
     }

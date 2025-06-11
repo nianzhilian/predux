@@ -63,10 +63,10 @@ export function enhanceFn(env,iterator,bb){
             res = iterator.next(nextValue);
         }
         const {value,done} = res;
-        console.log(value,"done:"+done,(bb&&bb.getValue()))
+        //console.log(value,"done:"+done,(bb&&bb.getValue()))
         if(done){
             callObj.cb && callObj.cb();
-            console.log("迭代结束:","isPas:"+isPas,(bb&&bb.getValue()))
+            //console.log("迭代结束:","isPas:"+isPas,(bb&&bb.getValue()))
             return;
         }
         //1、是否是指令对象 的处理
