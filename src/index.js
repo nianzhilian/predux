@@ -37,7 +37,7 @@ import addUser from "./store/action/usersAction";
 import loginUserAction from "./store/action/loginUserAction";
 import { increase,decrease,asyncIncrease,asyncDecrease } from "./store/action/counter";
 import store from "./store";
-import { Provider } from "react-redux";
+import {Provider,connect} from "./react-redux";
 import CountContainer from "./store/test";
 import { getMovies } from "./service/movies";
 import { fetchList } from "./store/action/movies/searchResultAction";
@@ -77,16 +77,14 @@ window.fetchMovies = function(){
   store.dispatch(fetchList());
 }
 
-/*function App(){
+function App(){
   return (
     <Provider store={store}>
       <CountContainer />
     </Provider>
   )
-}*/
-function App(){
-  return null;
 }
+
 
 root.render(<App />)
 // If you want to start measuring performance in your app, pass a function

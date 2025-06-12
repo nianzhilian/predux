@@ -1,72 +1,95 @@
-import React from 'react'
-import { connect } from 'react-redux';
-import store from '..';
-import { increase,decrease,asyncIncrease,asyncDecrease} from '../action/counter';
-/**
- * store--》容器组件提供数据--》传递给展示组件  展示组件用来展示数据
- */
+import React from "react";
+//import { connect } from 'react-redux';
+import connect from "../../react-redux/connect";
+import SearchBar from "../../component/SearchBar";
+import SearchTable from "../../component/SearchTable";
+import { change } from "../action/movies/searchAction";
+import { fetchList } from "../action/movies/searchResultAction";
+import store from "..";
+import {
+  increase,
+  decrease,
+  asyncIncrease,
+  asyncDecrease,
+} from "../action/counter";
 
-function TestCount(props){
-    return (
-        <div>
-            <p>{props.count}</p>
-            <button onClick={props.onAsyncDecrease}>异步减</button>
-            <button onClick={props.onDecrease}>减</button>
-            <button onClick={props.onIncrease}>加</button>
-            <button onClick={props.onAsyncIncrease}>异步加</button>
+let mapStateToProps = function (state) {
+  return {
+    defaultValue: state.search,
+  };
+};
+
+let mapDispatchToProps = function (dispatch) {
+  return {
+    onSearch: function (state) {
+      dispatch(change(state));
+    },
+  };
+};
+
+const SearchContainer = connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+
+mapStateToProps = function (state) {
+  return {
+    datas: state.movies.result.datas,
+  };
+};
+
+const SearchTableContainer = connect(mapStateToProps)(SearchTable);
+
+function Loading(props) {
+  return (
+    <>
+      {props.isLoading && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            bottom: 0,
+            width: "100%",
+            background: "rgba(0,0,0,.5)",
+            color: "#fff",
+            display:'table',
+            height:'100%'
+          }}
+        >
+          <div
+            style={{
+              display: "table-cell",
+              verticalAlign: "middle",
+              textAlign: "center",
+              fontSize: "2em",
+            }}
+          >
+            正在加载中
+          </div>
         </div>
-    )
+      )}
+    </>
+  );
 }
 
-function mapStateToProps(state){
-    return {
-        count:state.counter
-    }
+mapStateToProps = function (state) {
+  return {
+    isLoading: state.movies.result.isLoading,
+  };
+};
+
+const LoadingTmp = connect(mapStateToProps)(Loading);
+
+export default class extends React.Component {
+  //组件挂载完毕 触发 ajax请求的action
+  componentDidMount() {
+    store.dispatch(fetchList());
+  }
+  render() {
+    console.log("最大的父组件重新渲染");
+    return (
+      <>
+        <SearchContainer />
+        <SearchTableContainer />
+        <LoadingTmp />
+      </>
+    );
+  }
 }
-
-function mapDispatchToProps(dispatch){
-    return {
-        onIncrease:function(){
-            dispatch(increase());
-        },
-        onDecrease:function(){
-            dispatch(decrease())
-        },
-        onAsyncIncrease:function(){
-            dispatch(asyncIncrease())
-        },
-        onAsyncDecrease:function(){
-            dispatch(asyncDecrease())
-        }
-    }
-}
-
-// class CountContainer extends React.Component{
-//     constructor(props){
-//         super(props);
-//         this.state = mapStateToProps(store.getState());
-//         //添加订阅 当dispatch发生的时候 会依次调用 订阅的函数
-//         //返回一个新的函数 取消订阅  就是从数组中将新添加的删除掉
-//         this.cancleSubscribe = store.subscribe(()=>{
-//             this.setState(mapStateToProps(store.getState()))
-//         });
-//     }
-//     componentWillUnmount(){
-//         //当组件卸载的时候删除订阅
-//         this.cancleSubscribe();
-//     }
-//     render(){
-//         const handles = mapDispatchToProps(store.dispatch)
-//         return (
-//             <TestCount {...this.state} {...handles} />
-//         )
-//     }
-// }
-
-// export default CountContainer;
-/**
- * 这个就相当于上面的容器组件
- * connect 就是高阶组件创建函数 返回一个高阶函数（该高阶函数接收一个组件并返回一个新的组件）
- */
-console.log(React.createContext())
-export default connect(mapStateToProps,mapDispatchToProps)(TestCount)
