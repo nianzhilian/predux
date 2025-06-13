@@ -15,14 +15,17 @@ import {
 
 let mapStateToProps = function (state) {
   return {
-    defaultValue: state.search,
+    defaultValue: state.movies.search,
   };
 };
 
 let mapDispatchToProps = function (dispatch) {
   return {
     onSearch: function (state) {
+      //触发修改搜索的state
       dispatch(change(state));
+      //重新获取数据
+      dispatch(fetchList())
     },
   };
 };
