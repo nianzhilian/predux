@@ -3,6 +3,7 @@ import React from "react";
 import connect from "../../react-redux/connect";
 import SearchBar from "../../component/SearchBar";
 import SearchTable from "../../component/SearchTable";
+import { Pager } from "../../component/Pager";
 import { change } from "../action/movies/searchAction";
 import { fetchList } from "../action/movies/searchResultAction";
 import store from "..";
@@ -39,6 +40,42 @@ mapStateToProps = function (state) {
 };
 
 const SearchTableContainer = connect(mapStateToProps)(SearchTable);
+
+
+/**
+ * current 当前页
+ * total 总共多少条数据
+ * limit 每页显示的条数
+ * panelNum  当页数比较多 要显示的页码总量
+ * onChange 页码改变事件
+ * @param {} props 
+ */
+
+mapStateToProps = function(state){
+  return {
+    current:state.movies.search.page,
+    total:state.movies.result.total,
+    panelNum:10,
+    limit:state.movies.search.size
+  }
+}
+
+mapDispatchToProps = function(dispatch){
+  return {
+    onChangePage(newPage){
+      console.log("newPage:"+newPage)
+      //更改页数
+      dispatch(change({
+        page:newPage
+      }))
+      //重新拉取列表数据
+      dispatch(fetchList())
+    }
+  }
+}
+
+const PageContainer = connect(mapStateToProps,mapDispatchToProps)(Pager)
+
 
 function Loading(props) {
   return (
@@ -91,6 +128,7 @@ export default class extends React.Component {
       <>
         <SearchContainer />
         <SearchTableContainer />
+        <PageContainer />
         <LoadingTmp />
       </>
     );

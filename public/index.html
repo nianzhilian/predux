@@ -120,6 +120,21 @@
         });
         container.appendChild(clone);
     });
+
+
+    function createCounter() {
+      return function() {
+        let count = 0;
+        return {
+          increment: () => count++,
+          getCount: () => count
+        };
+      }();
+    }
+
+    var cnt1 = createCounter();
+    var cnt2 = createCounter();
+
     </script>
     <!--
       This HTML file is a template.

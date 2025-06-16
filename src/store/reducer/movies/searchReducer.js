@@ -2,7 +2,7 @@ import { CHANGE } from "../../action/movies/searchAction";
 
 const initState = {
     page:1,
-    size:10
+    size:20
 }
 
 export default function(state = initState,action){
