@@ -1,6 +1,7 @@
 // import { configureStore } from "@reduxjs/toolkit";
 // import { applyMiddleware } from "redux";
 import { createStore,bindActionCreators,applyMiddleware,thunk } from "../redux";
+import { composeWithDevTools } from "@redux-devtools/extension";
 import logger from "redux-logger";
 // import { thunk } from "redux-thunk";
 import rootReducer from './reducer';
@@ -38,6 +39,6 @@ function logg2(store){
 }
 console.log(Object.keys(thunk));
 const sagaMid = createSagaMiddleware();
-const store = applyMiddleware(sagaMid,thunk,logger)(createStore)(rootReducer);
+const store =  composeWithDevTools(applyMiddleware(sagaMid,thunk,logger))(createStore)(rootReducer);
 sagaMid.run(rootSaga);
 export default store;
