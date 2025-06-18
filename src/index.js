@@ -41,6 +41,7 @@ import {Provider,connect} from "./react-redux";
 import CountContainer from "./store/test";
 import { getMovies } from "./service/movies";
 import { fetchList } from "./store/action/movies/searchResultAction";
+import TestRouter from './store/router';
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 //getMovies()
@@ -80,7 +81,7 @@ window.fetchMovies = function(){
 function App(){
   return (
     <Provider store={store}>
-      <CountContainer />
+      <TestRouter />
     </Provider>
   )
 }
