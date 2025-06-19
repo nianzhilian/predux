@@ -1,7 +1,9 @@
 import { combineReducers } from "../../redux";
 // import { combineReducers } from "redux";
+import { connectRouter } from "../../connected-react-router";
 import counter from "./counter";
 import movies from "./movies";
+import history from "../history";
 
 // export default (state={},action)=>{
 //     console.log('根reducer',state,action)
@@ -13,8 +15,10 @@ import movies from "./movies";
 // }
 
 console.log(combineReducers)
-
+console.log(history)
+//connectRouter  返回一个处理router的reducer
 export default combineReducers({
     counter,
-    movies
+    movies,
+    router:connectRouter(history)
 });
