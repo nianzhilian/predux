@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Route, Link,Switch ,NavLink} from "react-router-dom";
 import { ConnectedRouter } from "../../connected-react-router";
-import { Provider } from "../../react-redux";
+import { Provider,connect } from "../../react-redux";
 import store from "..";
 import history from "../history";
+import { push,createLoactionChange } from "../../connected-react-router/action-creater";
 function UseLink(props) {
   return (
     <>
@@ -12,9 +13,28 @@ function UseLink(props) {
   );
 }
 
-function Index() {
-  return <div>首页</div>;
+function Index(props) {
+  return (
+    <>
+    <div>首页</div>
+    <button onClick={props.handleClick}>跳转至home页</button>
+    </>
+  );
 }
+
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    handleClick(){
+      alert('即将进入home页面')
+      dispatch(push('/home'))
+      setTimeout(() => {
+        dispatch(createLoactionChange('abc',{}))
+      }, 5000);
+    }
+  }
+}
+
+Index = connect(null,mapDispatchToProps)(Index);
 
 function Home() {
   return <div>home页面</div>;

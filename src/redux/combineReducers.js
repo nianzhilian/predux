@@ -7,6 +7,7 @@ export default function(obj){
                 newState[key] = reducer(state[key],action);
             }
         }
+        console.log(newState)
         return newState;
     }
 }

@@ -4,37 +4,73 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script> -->
 
     <script>
-      tinymce.init({
-        selector: '#mytextarea',
-        plugins: [
-          'a11ychecker', 'accordion', 'advlist', 'anchor', 'autolink', 'autosave',
-          'charmap', 'code', 'codesample', 'directionality', 'emoticons', 'exportpdf',
-          'exportword', 'fullscreen', 'help', 'image', 'importcss', 'importword',
-          'insertdatetime', 'link', 'lists', 'markdown', 'math', 'media', 'nonbreaking',
-          'pagebreak', 'preview', 'quickbars', 'save', 'searchreplace', 'table',
-          'visualblocks', 'visualchars', 'wordcount'
-        ],
-        toolbar: 'undo redo | accordion accordionremove | ' +
-          'importword exportword exportpdf | math | ' +
-          'blocks fontfamily fontsize | bold italic underline strikethrough | ' +
-          'align numlist bullist | link image | table media | ' +
-          'lineheight outdent indent | forecolor backcolor removeformat | ' +
-          'charmap emoticons | code fullscreen preview | save print | ' +
-          'pagebreak anchor codesample | ltr rtl',
-        menubar: 'file edit view insert format tools table help'
-      });
+      // tinymce.init({
+      //   selector: '#mytextarea',
+      //   plugins: [
+      //     'a11ychecker', 'accordion', 'advlist', 'anchor', 'autolink', 'autosave',
+      //     'charmap', 'code', 'codesample', 'directionality', 'emoticons', 'exportpdf',
+      //     'exportword', 'fullscreen', 'help', 'image', 'importcss', 'importword',
+      //     'insertdatetime', 'link', 'lists', 'markdown', 'math', 'media', 'nonbreaking',
+      //     'pagebreak', 'preview', 'quickbars', 'save', 'searchreplace', 'table',
+      //     'visualblocks', 'visualchars', 'wordcount'
+      //   ],
+      //   toolbar: 'undo redo | accordion accordionremove | ' +
+      //     'importword exportword exportpdf | math | ' +
+      //     'blocks fontfamily fontsize | bold italic underline strikethrough | ' +
+      //     'align numlist bullist | link image | table media | ' +
+      //     'lineheight outdent indent | forecolor backcolor removeformat | ' +
+      //     'charmap emoticons | code fullscreen preview | save print | ' +
+      //     'pagebreak anchor codesample | ltr rtl',
+      //   menubar: 'file edit view insert format tools table help'
+      // });
 
-      function bcd(...args){
-        console.log(args)
+      // function bcd(...args){
+      //   console.log(args)
+      // }
+
+      // function abc(...args){
+      //   bcd(...args.concat(4))
+      // }
+      // abc(1,2,3)
+
+
+      // // document.addEventListener('keydown', (e) => {
+      // //     const forbiddenKeys = {
+      // //       'PrintScreen': true,
+      // //       'Meta+Shift+3': true,  // Mac
+      // //       'Meta+Shift+4': true,
+      // //       'Alt+PrintScreen': true  // Windows
+      // //     };
+      // //     const keyCombination = [
+      // //       e.metaKey ? 'Meta+' : '',
+      // //       e.altKey ? 'Alt+' : '',
+      // //       e.shiftKey ? 'Shift+' : '',
+      // //       e.code
+      // //     ].join('');
+          
+      // //     console.log(e.code);
+
+      // //     if (forbiddenKeys[keyCombination]) {
+      // //       e.preventDefault();
+      // //     }
+      // // });
+      //对象字面量不会创建新的作用域
+      //箭头函数中的this指向的是外层作用域
+      //外层作用域是window对象 所以 this指向的是window对象
+
+      //改为普通函数会动态的绑定到调用者
+      var obj = {
+        count:0,
+        add:()=>{
+          console.log(this);
+          console.log(this.count)
+        }
       }
 
-      function abc(...args){
-        bcd(...args.concat(4))
-      }
-      abc(1,2,3)
+      obj.add();
     </script>
 
   </head>

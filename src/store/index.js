@@ -6,11 +6,13 @@ import logger from "redux-logger";
 // import { thunk } from "redux-thunk";
 import rootReducer from './reducer';
 import createSagaMiddleware from "../redux-saga";
+import { routerMiddleware } from "../connected-react-router";
 //import createSagaMiddleware from "redux-saga";
 import rootSaga from './saga2';
 import loginUserActionCreater from "./action/loginUserAction";
 import usersActionCreater,{edit} from "./action/usersAction";
 import { increase,decrease } from "./action/counter";
+import history from "./history";
 //中间件是一个函数 该函数是一个创建函数 接收下一个dispatch   并返回一个新的dispatch函数 以备下一个中间件接收
 
 function logg1(store){
@@ -39,6 +41,7 @@ function logg2(store){
 }
 console.log(Object.keys(thunk));
 const sagaMid = createSagaMiddleware();
-const store =  composeWithDevTools(applyMiddleware(sagaMid,thunk,logger))(createStore)(rootReducer);
+const routerMid = routerMiddleware(history);
+const store =  composeWithDevTools(applyMiddleware(routerMid,sagaMid,thunk,logger))(createStore)(rootReducer);
 sagaMid.run(rootSaga);
 export default store;
