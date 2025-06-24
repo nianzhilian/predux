@@ -6,7 +6,8 @@ export default function(history){
                 console.log("这里会走二边--------------------------------------")
                 console.log(action)
                 if(action.type === CALL_HISTORY_METHOD){
-                    console.log("走路由跳转了")
+                    const {payload} = action;
+                    history[payload.method](...payload.args);
                 }else{
                     return next(action);
                 }

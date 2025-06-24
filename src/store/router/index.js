@@ -25,11 +25,7 @@ function Index(props) {
 const mapDispatchToProps = (dispatch)=>{
   return {
     handleClick(){
-      alert('即将进入home页面')
       dispatch(push('/home'))
-      setTimeout(() => {
-        dispatch(createLoactionChange('abc',{}))
-      }, 5000);
     }
   }
 }
